@@ -89,8 +89,8 @@ $(function() {
     ev.preventDefault();
     console.log('form  submitted, performing ajax call...');
     $.ajax({
-      url: $form.attr('action'),
-      type: $form.attr('method'),
+      url: "/tweets",
+      type: "POST",
       data: $form.serialize(),
       success: (response) => {
         console.log('Success: ', response);
