@@ -68,7 +68,7 @@ function createTweetElement(tweet) {
 				<img class="profile-avatar" src="${tweet.user.avatars.small}">
 				<strong class="fullname">${tweet.user.name}</strong>
         	<span>
-						${tweet.handle}
+						${tweet.user.handle}
         	</span>
         </div>
       </header>
@@ -81,6 +81,25 @@ function createTweetElement(tweet) {
 		</article>
 	`
 }
+
+
+$(function() {
+  let $form = $('#new-tweet-form');
+  $form.submit( (ev) => {
+    ev.preventDefault();
+    console.log('form  submitted, performing ajax call...');
+    $.ajax({
+      url: $form.attr('action'),
+      type: $form.attr('method'),
+      data: $form.serialize(),
+      success: (response) => {
+        console.log('Success: ', response);
+        $('new-tweet-text').replaceWith('');
+      }
+    });
+  });
+});
+
 $("document").ready(function () {
 	renderTweets(data)
 });
