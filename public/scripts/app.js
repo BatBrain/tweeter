@@ -3,61 +3,12 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-
-// Fake data taken from tweets.json
-var data = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
+let tweets = $.get("/tweets");
 
 function renderTweets(tweets) {
 	// console.log(tweets.map(x => `<div>${x.content.text}</div>`));
-	tweets.forEach(tweet => {
-  	$('#tweet-container').append(createTweetElement(tweet))
-	});
-};
+	$('#tweet-container').html(tweets.map(createTweetElement));
+}
 
 function createTweetElement(tweet) {
   // var $tweet = $('<article>').addClass('tweet');
@@ -82,24 +33,45 @@ function createTweetElement(tweet) {
 	`
 }
 
+function composeButton() {
+  $('div.create-tweet-button').hover(() => {
+    console.log($('div.create-tweet-button').children())
+    $('div.create-tweet-button').children().css("color", "#00a087")
+  }, () => {
+    console.log('leave')
+    $('div.create-tweet-button').children().css("color", "black")
+  })
+  $('div.create-tweet-button').click(function() {
+    $('section.new-tweet').toggle('500', function() {
+    if ($('section.new-tweet').is(':visible')) {
+      console.log($('section.new-tweet textarea'))
+      $('section.new-tweet textarea').focus()
+    }
+    })
+  })
+}
 
 $(function() {
   let $form = $('#new-tweet-form');
   $form.submit( (ev) => {
     ev.preventDefault();
-    console.log('form  submitted, performing ajax call...');
+    let text = `${$('#new-tweet-text').val()}`
+    if (text.length < 1 || text === null) {
+      return alert("You heven't entered anything to send!")
+    }
+    if (text.length > 140) {
+      return alert("Thats too long!")
+    }
     $.ajax({
       url: "/tweets",
       type: "POST",
-      data: $form.serialize(),
-      success: (response) => {
-        console.log('Success: ', response);
-        $('new-tweet-text').replaceWith('');
-      }
-    });
+      data: $form.serialize()
+    })
+    .then((response) => {
+        $('#new-tweet-text').val('');
+    })
+    .then(() => $.get("/tweets").then(renderTweets))
   });
-});
-
-$("document").ready(function () {
-	renderTweets(data)
+  composeButton();
+  tweets.then(renderTweets);
 });

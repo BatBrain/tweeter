@@ -1,12 +1,11 @@
 #nav-bar {
-    z-index: 1000000000;
-    position: fixed;
-    padding-left: 2em;
-    padding-right: 2em;
-    height: 80px;
-    width: 100%;
-    background: #00a087;
-
+  z-index: 1000;
+  position: fixed;
+  padding-left: 2em;
+  padding-right: 2em;
+  height: 80px;
+  width: 100%;
+  background: #00a087;
 }
 #nav-bar > span.header {
 	float: left;
@@ -22,4 +21,14 @@
 .logo {
 	float: left;
 
+}
+
+div.create-tweet-button {
+  float: right;
+  background: white;
+  padding: 10px 5px;
+  border: black solid 2px;
+  border-radius: 5px;
+  margin-top: 15px;
+  cursor: pointer;
 }

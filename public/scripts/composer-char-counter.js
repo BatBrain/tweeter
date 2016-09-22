@@ -3,7 +3,7 @@ $(document).ready(readyFn);
 function readyFn(jQuery) {
 
 	console.log("Document ready!");
-	$("#newTweetText").on("input", function() {
+	$("#new-tweet-text").on("input", function() {
 		var length = $(this).val().length
 		if (length > 140) {
 			$("#newTweetCounter").css('color', 'red');
