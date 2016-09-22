@@ -31,7 +31,53 @@ body {
   width: 450px;
   margin: auto;
   background: white;
-  padding-top: 140px;
-  top: 140px;
-  height: 100vh;
+  padding: 140px 0px;
  }
+
+article.tweet {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: rgba(128, 128, 128, 0.52);
+    margin: 2em;
+    overflow: hidden;
+}
+
+header.tweet-header {
+  background: #eee;
+  border-bottom: #eee;
+  border-bottom-style: solid;
+  margin-top: 0;
+  height: 70px;
+  padding: 10px;
+}
+
+footer.tweet-footer {
+  padding-right: 10px;
+  border-top: 1px solid #eee;
+  padding: 10px;
+  display: flex;
+}
+
+footer.tweet-footer > span {
+  margin-left: auto;
+}
+
+.tweet-header > div > strong {
+  float: left;
+  padding: 5px;
+  padding: 5px;
+}
+
+.tweet-header > div > span {
+  float: right;
+}
+
+img.profile-avatar {
+  float: left;
+  border-radius: 10px;
+}
+
+.tweet-text {
+      padding: 25px 10px
+}
