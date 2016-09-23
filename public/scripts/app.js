@@ -8,6 +8,13 @@ let tweets = $.get("/tweets");
 function renderTweets(tweets) {
 	// console.log(tweets.map(x => `<div>${x.content.text}</div>`));
 	$('#tweet-container').html(tweets.map(createTweetElement));
+};
+
+function annoyingAlert() {
+  $('.container').on('click', 'article.tweet', function(ev) {
+    ev.preventDefault();
+    alert('Tweet, Tweet!');
+  });
 }
 
 function createTweetElement(tweet) {
@@ -31,7 +38,7 @@ function createTweetElement(tweet) {
       </footer>
 		</article>
 	`
-}
+};
 
 function composeButton() {
   $('div.create-tweet-button').hover(() => {
@@ -44,12 +51,11 @@ function composeButton() {
   $('div.create-tweet-button').click(function() {
     $('section.new-tweet').toggle('500', function() {
     if ($('section.new-tweet').is(':visible')) {
-      console.log($('section.new-tweet textarea'))
       $('section.new-tweet textarea').focus()
     }
-    })
-  })
-}
+    });
+  });
+};
 
 $(function() {
   let $form = $('#new-tweet-form');
@@ -57,10 +63,10 @@ $(function() {
     ev.preventDefault();
     let text = `${$('#new-tweet-text').val()}`
     if (text.length < 1 || text === null) {
-      return alert("You heven't entered anything to send!")
+      return alert("You heven't entered anything to send!");
     }
     if (text.length > 140) {
-      return alert("Thats too long!")
+      return alert("Thats too long!");
     }
     $.ajax({
       url: "/tweets",
@@ -74,4 +80,5 @@ $(function() {
   });
   composeButton();
   tweets.then(renderTweets);
+  annoyingAlert();
 });
