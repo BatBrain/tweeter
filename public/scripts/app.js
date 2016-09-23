@@ -18,7 +18,7 @@ function annoyingAlert() {
 }
 
 function createTweetElement(tweet) {
-  // var $tweet = $('<article>').addClass('tweet');
+
 	return `
 		<article class="tweet">
 			<header class="tweet-header">
@@ -34,7 +34,7 @@ function createTweetElement(tweet) {
        		${tweet.content.text}
       </div>
       <footer class="tweet-footer">
-        	<span>${tweet.created_at}</spam>
+        	<span>${(new Date(tweet.created_at)).toDateString()}</spam>
       </footer>
 		</article>
 	`
@@ -42,10 +42,8 @@ function createTweetElement(tweet) {
 
 function composeButton() {
   $('div.create-tweet-button').hover(() => {
-    console.log($('div.create-tweet-button').children())
     $('div.create-tweet-button').children().css("color", "#00a087")
   }, () => {
-    console.log('leave')
     $('div.create-tweet-button').children().css("color", "black")
   })
   $('div.create-tweet-button').click(function() {
